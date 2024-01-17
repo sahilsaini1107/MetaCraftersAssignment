@@ -44,19 +44,47 @@ const isWalletConnected = async () => {
     }
   }
 
-  const getContract = async () => {
-    const connectedAccount = getGlobalState('connectedAccount')
+  // const getContract = async () => {
+  //   const connectedAccount = getGlobalState('connectedAccount')
   
-    if (connectedAccount) {
-      const provider = new ethers.providers.Web3Provider(ethereum)
-      const signer = provider.getSigner()
-      const contract = new ethers.Contract(contractAddress, contractAbi, signer)
-      return contract
-    } else {
-      return getGlobalState('contract')
+  //   if (connectedAccount) {
+  //     const provider = new ethers.providers.Web3Provider(ethereum)
+  //     const signer = provider.getSigner()
+  //     const contract = new ethers.Contract(contractAddress, contractAbi, signer)
+  //     return contract
+  //   } else {
+  //     return getGlobalState('contract')
+  //   }
+  
+  // }
+  const getContract = async () => {
+    const connectedAccount = getGlobalState('connectedAccount');
+  
+    // Check if ethereum provider is available
+    const ethereum = window.ethereum;
+    if (!ethereum) {
+      console.error('Ethereum provider not found. Make sure MetaMask is installed.');
+      return null; // or handle the lack of provider in some way
     }
   
-  }
+    try {
+      // Request account access if needed
+      await ethereum.enable();
+      console.log('MetaMask enabled');
+    } catch (error) {
+      console.error('Error enabling MetaMask:', error);
+      // Handle error (e.g., show a message to the user)
+    }
+  
+    if (connectedAccount) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+      return contract;
+    } else {
+      return getGlobalState('contract');
+    }
+  };
  
   const addNewOrganization = async (name ,address, token) => {
     try {
@@ -137,7 +165,6 @@ const isWalletConnected = async () => {
     try {
   
       if (!ethereum) return alert("Please install Metamask")
-      // const connectedAccount = getGlobalState("connectedAccount")
       const contract = await getContract()
       const organization = await contract.claimToken()
       console.log("organization ",organization)

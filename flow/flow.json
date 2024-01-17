@@ -1,0 +1,17 @@
+{
+	"contracts": {
+		"Staking": "contract.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testing": "127.0.0.1:3569",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "4816da1e8c6c279e967d78ff8fb2874b0fa6505507eacb05ea7d58133eaaab54"
+		}
+	}
+}

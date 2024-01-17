@@ -32,7 +32,7 @@ function User() {
             </div>
             <div className="flex justify-center">
             <button
-                className="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-6 rounded-full"
+                className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-md"
                 onClick={() => claimVesting()}
               >
                 Claim your vested Token
